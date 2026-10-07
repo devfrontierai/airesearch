@@ -1,0 +1,40 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{listings}
+\lstset{breaklines=true, basicstyle=\ttfamily\footnotesize}
+
+
+\title{\Large\bf Benchmarking Continuous Context Computation for Enterprise AI:\\A Reproducible Framework for Semantic Context Efficiency}
+\author{\textbf{DevFrontier AI Research} \\ \textit{Research Division}}
+
+\begin{document}
+\maketitle
+
+\input{01_abstract.tex}
+\input{02_introduction.tex}
+\input{02b_ccc_architecture.tex}
+\input{03_benchmark_strategy.tex}
+\input{04_question_taxonomy.tex}
+\input{05_systems_comparison.tex}
+\input{06_metrics_efficiency.tex}
+\input{07_cost_model.tex}
+\input{07b_federated_ccc.tex}
+\input{08_hypotheses.tex}
+\input{09_conclusion.tex}
+\input{10_appendix.tex}
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

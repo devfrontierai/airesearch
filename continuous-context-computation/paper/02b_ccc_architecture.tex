@@ -1,0 +1,47 @@
+
+\section{Continuous Context Computation (CCC)}
+\label{sec:ccc}
+
+To resolve the query-time bottlenecks of RAG, we propose \textbf{Continuous Context Computation (CCC)}. CCC formally decouples context computation from inference computation.
+
+\subsection{The CCC Algorithmic Framework}
+Data streams from disparate systems are ingested asynchronously. The CCC engine continuously extracts entities, resolves schemas, and computes relational edges in the background, maintaining a highly structured, temporally-aware Semantic Graph.
+
+At query time, the system no longer performs a linear $O(N)$ scan. It identifies starting nodes within the pre-computed graph and traverses the explicitly maintained edges $E$. This reduces retrieval complexity to a localized $O(E)$ graph neighborhood traversal.
+
+\begin{figure*}[htbp]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[
+  font=\sffamily,
+  >=stealth,
+  thick,
+  system/.style={rectangle, draw=blue!80, fill=blue!10, rounded corners, minimum width=3.5cm, minimum height=1cm, align=center},
+  engine/.style={rectangle, draw=green!80, fill=green!10, rounded corners, minimum width=4cm, minimum height=1.5cm, align=center},
+  graph/.style={circle, draw=purple!80, fill=purple!10, minimum size=3cm, align=center},
+  user/.style={rectangle, draw=orange!80, fill=orange!10, rounded corners, minimum width=3cm, minimum height=1cm, align=center}
+]
+% Nodes
+\node[system] (unstruct) {Unstructured Streams\\(Slack, Gmail)};
+\node[system] (struct) [below=0.8cm of unstruct] {Structured DBs\\(PostgreSQL, ERP)};
+
+\node[engine] (ccc) [right=3.5cm of unstruct, yshift=-0.9cm] {Continuous Context Engine\\(Entity Extraction \&\\Schema Alignment)};
+
+\node[graph] (kg) [right=3.5cm of ccc] {Semantic Graph\\$O(E)$ Traversal};
+
+\node[user] (query) [above=1.5cm of kg] {User Query};
+\node[user] (llm) [right=3.5cm of kg] {LLM Response};
+
+% Edges
+\draw[->] (unstruct.east) -- (ccc.west);
+\draw[->] (struct.east) -- (ccc.west);
+\draw[->] (ccc.east) -- node[above, font=\footnotesize] {Async Updates} (kg.west);
+\draw[->] (query.south) -- node[right, font=\footnotesize] {Online Request} (kg.north);
+\draw[->] (kg.east) -- node[above, font=\footnotesize] {Context} (llm.west);
+\end{tikzpicture}
+}
+\caption{Continuous Context Computation (CCC) Architecture. By shifting semantic schema alignment and entity extraction to an offline continuous engine, online queries bypass the vector database completely, relying instead on flat $O(E)$ graph traversal.}
+\label{fig:ccc_arch}
+\end{figure*}
+
+By executing semantic alignment before the user asks a question, CCC achieves flat latency scaling and perfect provenance tracking.

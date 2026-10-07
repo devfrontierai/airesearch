@@ -1,0 +1,14 @@
+\section{Systems Under Comparison}
+\label{sec:systems}
+
+To ensure fairness, all systems utilize identical embedding models, LLMs, hardware, and source data.
+\begin{itemize}
+    \item \textbf{Baseline A:} Keyword/BM25 retrieval.
+    \item \textbf{Baseline B:} Dense vector RAG (ANN).
+    \item \textbf{Baseline C:} Hybrid RAG (Dense + Sparse).
+    \item \textbf{Baseline D:} Hybrid RAG + Cross-encoder Reranking.
+    \item \textbf{Baseline E:} Long-context LLM provided with vast retrieved chunks.
+    \item \textbf{Baseline F:} Knowledge-graph enhanced RAG.
+    \item \textbf{Proposed System:} Continuous Context Computation (CCC).
+\end{itemize}
+Ablation studies will systematically disable semantic alignment, temporal context, and incremental caching to isolate performance contributions.

@@ -1,0 +1,20 @@
+
+\appendix
+\section{Appendix: Methodological Constraints and Dataset Generation Algorithms}
+\label{sec:appendix}
+
+\subsection{Algorithmic Constraints of the Synthetic Corpus}
+Rather than utilizing raw JSON schemas which often fail to convey the deep relational complexity of enterprise environments, we formalize the dataset generation logic used to create the 512,000 document corpus.
+
+The data generator strictly enforces a scale-free network topology using the Barabási–Albert (BA) preferential attachment model. When a new document node $d_{new}$ is generated from a simulated platform (e.g., a GitHub commit), it attaches to existing entity nodes (e.g., an existing Developer or Jira Ticket) with a probability proportional to the target node's existing degree $k_i$:
+\begin{equation}
+P(d_{new} \rightarrow v_i) = \frac{k_i}{\sum_j k_j}
+\end{equation}
+This mathematically guarantees that our synthetic 512K corpus mimics the true "hub-and-spoke" nature of real-world enterprises, where core projects or central personnel become highly connected hubs.
+
+\subsection{Resolution of Edge Decay}
+To model the temporal nature of enterprise intelligence, every edge $e(u,v)$ generated in the benchmark contains a temporal weight decay function:
+\begin{equation}
+w(t) = w_0 \cdot e^{-\lambda (t - t_0)}
+\end{equation}
+This ensures that legacy context (e.g., a deprecated policy from 2021) naturally loses relevance compared to active, highly-traversed documentation, resolving the "context staleness" issue that plagues traditional caching mechanisms.

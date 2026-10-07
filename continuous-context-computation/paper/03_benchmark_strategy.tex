@@ -1,0 +1,22 @@
+
+\section{Benchmark Strategy and Datasets}
+\label{sec:benchmark}
+To robustly evaluate the CCC hypothesis, our framework employs public benchmarks and three meticulously generated synthetic enterprise groups.
+
+\subsection{Public Benchmark Formalization}
+\textbf{Dataset 1: MS MARCO.} We evaluate $P@K$ and $nDCG@10$ across training queries to establish standard search baselines.
+
+\textbf{Dataset 2: HotpotQA.} We evaluate multi-hop chaining across 90,447 questions requiring exactly two supporting facts $f_1, f_2$. 
+
+\subsection{Synthetic Enterprise Generation (3 Target Modalities)}
+To prove CCC's versatility, we generated 512,000 documents segregated into three distinct modalities.
+
+\textbf{Group 1: Unstructured Sources Only.} 
+This represents raw communication streams (e.g., Slack, Gmail, Fireflies transcripts). CCC continuously ingests these unstructured blocks, extracting Named Entities via NLP pipelines, and linking overlapping entities (e.g., linking a mention of "Project Phoenix" in Slack to a meeting transcript in Fireflies).
+
+\textbf{Group 2: Hybrid (Structured + Unstructured).} 
+This group tests the integration of rigid schema data with free-form text. For example, linking a structured PostgreSQL row representing a customer's \texttt{annual\_contract\_value} directly to an unstructured Jira bug ticket complaining about that customer's login issue. CCC handles this by treating structured primary keys as absolute anchor nodes, wrapping unstructured text edges around them.
+
+\textbf{Group 3: Structured Sources Only.} 
+This isolates CCC's ability to perform \textit{Semantic Schema Alignment} across disconnected databases. 
+For instance, a CRM system uses \texttt{customer\_id} and \texttt{annual\_value}, while the ERP system uses \texttt{cust\_id} and \texttt{revenue}. Query-time RAG approaches fail here without heavy LLM "text-to-SQL" reasoning. CCC continuously maps these heterogeneous schemas into a unified, agnostic node structure offline, allowing instant traversal across databases without writing complex JOINs.

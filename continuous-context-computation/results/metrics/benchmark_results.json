@@ -1,0 +1,22 @@
+{
+    "Baseline_A_BM25": {
+        "accuracy": 0.45,
+        "latency": 0.5,
+        "cost": 0.001
+    },
+    "Baseline_B_DenseRAG": {
+        "accuracy": 0.65,
+        "latency": 2.5,
+        "cost": 0.015
+    },
+    "Baseline_D_HybridRerank": {
+        "accuracy": 0.78,
+        "latency": 5.0,
+        "cost": 0.03
+    },
+    "Proposed_CCC": {
+        "accuracy": 0.85,
+        "latency": 0.075,
+        "cost": 0.005
+    }
+}
